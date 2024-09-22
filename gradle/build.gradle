@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.10.0'
+}
+
+group 'com.example.todolist' // Substitua pelo seu grupo
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.kordamp.ikonli:ikonli-core:12.3.0'
+    implementation 'org.kordamp.ikonli:ikonli-material-pack:12.3.0'
+}
+
+intellij {
+    version '2024.2.1'
+}
