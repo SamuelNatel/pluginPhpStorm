@@ -44,7 +44,8 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory
 
         // Painel onde as tarefas aparecerão
         JPanel taskListPanel = new JPanel();
-        taskListPanel.setLayout(new GridLayout(0, 1)); // Usar GridLayout para melhor espaçamento
+        taskListPanel.setLayout(new BoxLayout(taskListPanel, BoxLayout.Y_AXIS)); // Usar BoxLayout para empilhar as tarefas verticalmente
+        taskListPanel.setAlignmentX(Component.LEFT_ALIGNMENT); // Garante alinhamento
         JScrollPane scrollPane = new JScrollPane(taskListPanel);
         scrollPane.setPreferredSize(new Dimension(300, 200));
         todoPanel.add(scrollPane, BorderLayout.CENTER);
@@ -108,7 +109,11 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory
     private void addTask(JTextField taskField, JPanel taskListPanel) {
         String taskText = taskField.getText();
         if (!taskText.isEmpty()) {
-            JPanel taskPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Centraliza a task
+            // JPanel sem nenhum layout especial ou borda que possa adicionar espaçamento
+            JPanel taskPanel = new JPanel();
+            taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.X_AXIS)); // Alinhar os itens horizontalmente dentro de cada tarefa
+            taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT); // Alinhar à esquerda no painel principal
+
             JCheckBox checkBox = new JCheckBox(taskText);
             checkBox.setFont(new Font(checkBox.getFont().getName(), checkBox.getFont().getStyle(), currentFontSize));
 
@@ -121,8 +126,11 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory
                 }
             });
 
+            // Adiciona o checkbox ao painel da tarefa
             taskPanel.add(checkBox);
             taskListPanel.add(taskPanel);
+
+            // Remove qualquer espaçamento ou preenchimento extra no painel principal
             taskListPanel.revalidate();
             taskListPanel.repaint();
             taskField.setText("");
