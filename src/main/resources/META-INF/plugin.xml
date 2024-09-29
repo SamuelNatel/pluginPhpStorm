@@ -27,7 +27,7 @@
     <toolWindow id="To Do List" anchor="left" factoryClass="com.program.todolist.ToDoListToolWindowFactory"/>
   </extensions>
 
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 
   <idea-version since-build="222.3345.118" until-build="231.*"/>
 </idea-plugin>
