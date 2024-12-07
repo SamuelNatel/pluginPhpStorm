@@ -29,5 +29,5 @@
 
   <version>1.0.4</version>
 
-  <idea-version since-build="222.3345.118" until-build="231.*"/>
+  <idea-version since-build="222.3345.118"/>
 </idea-plugin>
