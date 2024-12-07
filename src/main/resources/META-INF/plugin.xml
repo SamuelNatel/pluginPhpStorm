@@ -21,7 +21,7 @@
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
   <depends>com.intellij.modules.platform</depends>
 
-  <version>1.0.4</version>
+  <version>1.0.5</version>
 
   <idea-version since-build="222.3345.118" until-build="241.*"/>
 </idea-plugin>
