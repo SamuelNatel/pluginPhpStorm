@@ -21,12 +21,6 @@
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
   <depends>com.intellij.modules.platform</depends>
 
-  <!-- Extension points defined by the plugin.
-       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
-  <extensions defaultExtensionNs="com.intellij">
-    <toolWindow id="To Do List" anchor="left" factoryClass="com.program.todolist.ToDoListToolWindowFactory"/>
-  </extensions>
-
   <version>1.0.4</version>
 
   <idea-version since-build="222.3345.118"/>
