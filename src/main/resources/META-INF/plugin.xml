@@ -22,7 +22,7 @@
   <depends>com.intellij.modules.platform</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <toolWindow id="ToDo List" anchor="left" factoryClass="com.program.todolist.ToDoListToolWindowFactory"/>
+    <toolWindow id="ToDo List" anchor="left" factoryClass="com.program.ToDoListToolWindowFactory"/>
   </extensions>
 
   <version>1.1</version>

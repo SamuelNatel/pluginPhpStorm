@@ -1,4 +1,4 @@
-package com.program.todolist;
+package com.program;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
