@@ -21,6 +21,10 @@
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
   <depends>com.intellij.modules.platform</depends>
 
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="ToDo List" anchor="left" factoryClass="com.program.todolist.ToDoListToolWindowFactory"/>
+  </extensions>
+
   <version>1.1</version>
 
   <idea-version since-build="222.3345.118" until-build="241.*"/>
