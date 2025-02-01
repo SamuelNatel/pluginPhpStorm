@@ -1,5 +1,6 @@
 package com.program.todolist;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
@@ -8,14 +9,12 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class ToDoListToolWindowFactory implements ToolWindowFactory
-{
-    private int currentFontSize = 12; // Tamanho inicial da fonte
+public class ToDoListToolWindowFactory implements ToolWindowFactory {
+
+    private int currentFontSize = 12;
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull com.intellij.openapi.wm.ToolWindow toolWindow) {
@@ -42,10 +41,9 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory
 
         todoPanel.add(inputPanel, BorderLayout.NORTH);
 
-        // Painel onde as tarefas aparecerão
         JPanel taskListPanel = new JPanel();
-        taskListPanel.setLayout(new BoxLayout(taskListPanel, BoxLayout.Y_AXIS)); // Usar BoxLayout para empilhar as tarefas verticalmente
-        taskListPanel.setAlignmentX(Component.LEFT_ALIGNMENT); // Garante alinhamento
+        taskListPanel.setLayout(new BoxLayout(taskListPanel, BoxLayout.Y_AXIS));
+        taskListPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         JScrollPane scrollPane = new JScrollPane(taskListPanel);
         scrollPane.setPreferredSize(new Dimension(300, 200));
         todoPanel.add(scrollPane, BorderLayout.CENTER);
@@ -61,33 +59,9 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory
 
         todoPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Ação do botão Add Task
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addTask(taskField, taskListPanel);
-            }
-        });
+        addButton.addActionListener(e -> addTask(taskField, taskListPanel));
+        deleteButton.addActionListener(e -> deleteSelectedTasks(taskListPanel));
 
-        // Ação do botão Delete Selected
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (Component component : taskListPanel.getComponents()) {
-                    if (component instanceof JPanel) {
-                        JPanel taskPanel = (JPanel) component;
-                        JCheckBox checkBox = (JCheckBox) taskPanel.getComponent(0);
-                        if (checkBox.isSelected()) {
-                            taskListPanel.remove(taskPanel);
-                        }
-                    }
-                }
-                taskListPanel.revalidate();
-                taskListPanel.repaint();
-            }
-        });
-
-        // Adiciona a task ao pressionar Enter
         taskField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -97,11 +71,10 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory
             }
         });
 
-        // Ações para os botões de ajuste de fonte
         increaseFontButton.addActionListener(e -> adjustFontSize(taskListPanel, 1));
         decreaseFontButton.addActionListener(e -> adjustFontSize(taskListPanel, -1));
 
-        ContentFactory contentFactory = ContentFactory.getInstance();
+        ContentFactory contentFactory = ApplicationManager.getApplication().getService(ContentFactory.class);
         Content content = contentFactory.createContent(todoPanel, "", false);
         toolWindow.getContentManager().addContent(content);
     }
@@ -109,15 +82,13 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory
     private void addTask(JTextField taskField, JPanel taskListPanel) {
         String taskText = taskField.getText();
         if (!taskText.isEmpty()) {
-            // JPanel sem nenhum layout especial ou borda que possa adicionar espaçamento
             JPanel taskPanel = new JPanel();
-            taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.X_AXIS)); // Alinhar os itens horizontalmente dentro de cada tarefa
-            taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT); // Alinhar à esquerda no painel principal
+            taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.X_AXIS));
+            taskPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             JCheckBox checkBox = new JCheckBox(taskText);
             checkBox.setFont(new Font(checkBox.getFont().getName(), checkBox.getFont().getStyle(), currentFontSize));
 
-            // Adiciona ação para riscar a tarefa ao ser marcada
             checkBox.addActionListener(e -> {
                 if (checkBox.isSelected()) {
                     checkBox.setText("<html><strike>" + taskText + "</strike></html>");
@@ -126,15 +97,27 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory
                 }
             });
 
-            // Adiciona o checkbox ao painel da tarefa
             taskPanel.add(checkBox);
             taskListPanel.add(taskPanel);
 
-            // Remove qualquer espaçamento ou preenchimento extra no painel principal
             taskListPanel.revalidate();
             taskListPanel.repaint();
             taskField.setText("");
         }
+    }
+
+    private void deleteSelectedTasks(JPanel taskListPanel) {
+        for (Component component : taskListPanel.getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel taskPanel = (JPanel) component;
+                JCheckBox checkBox = (JCheckBox) taskPanel.getComponent(0);
+                if (checkBox.isSelected()) {
+                    taskListPanel.remove(taskPanel);
+                }
+            }
+        }
+        taskListPanel.revalidate();
+        taskListPanel.repaint();
     }
 
     private void adjustFontSize(JPanel taskListPanel, int increment) {
