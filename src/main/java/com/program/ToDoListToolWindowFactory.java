@@ -2,6 +2,7 @@ package com.program;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
@@ -11,16 +12,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ToDoListToolWindowFactory implements ToolWindowFactory {
 
     private int currentFontSize = 12;
+    private final List<JCheckBox> taskCheckBoxes = new ArrayList<>();
 
     @Override
-    public void createToolWindowContent(@NotNull Project project, @NotNull com.intellij.openapi.wm.ToolWindow toolWindow) {
+    public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         JPanel todoPanel = new JPanel(new BorderLayout());
 
-        JLabel titleLabel = new JLabel("ToDo List", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("To-Do List", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         todoPanel.add(titleLabel, BorderLayout.NORTH);
 
@@ -99,6 +103,7 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory {
 
             taskPanel.add(checkBox);
             taskListPanel.add(taskPanel);
+            taskCheckBoxes.add(checkBox);
 
             taskListPanel.revalidate();
             taskListPanel.repaint();
@@ -107,27 +112,23 @@ public class ToDoListToolWindowFactory implements ToolWindowFactory {
     }
 
     private void deleteSelectedTasks(JPanel taskListPanel) {
-        for (Component component : taskListPanel.getComponents()) {
-            if (component instanceof JPanel) {
-                JPanel taskPanel = (JPanel) component;
-                JCheckBox checkBox = (JCheckBox) taskPanel.getComponent(0);
-                if (checkBox.isSelected()) {
-                    taskListPanel.remove(taskPanel);
-                }
+        taskCheckBoxes.removeIf(checkBox -> {
+            if (checkBox.isSelected()) {
+                Component parent = checkBox.getParent();
+                taskListPanel.remove(parent);
+                return true;
             }
-        }
+            return false;
+        });
+
         taskListPanel.revalidate();
         taskListPanel.repaint();
     }
 
     private void adjustFontSize(JPanel taskListPanel, int increment) {
         currentFontSize += increment;
-        for (Component component : taskListPanel.getComponents()) {
-            if (component instanceof JPanel) {
-                JPanel taskPanel = (JPanel) component;
-                JCheckBox checkBox = (JCheckBox) taskPanel.getComponent(0);
-                checkBox.setFont(new Font(checkBox.getFont().getName(), checkBox.getFont().getStyle(), currentFontSize));
-            }
+        for (JCheckBox checkBox : taskCheckBoxes) {
+            checkBox.setFont(new Font(checkBox.getFont().getName(), checkBox.getFont().getStyle(), currentFontSize));
         }
         taskListPanel.revalidate();
         taskListPanel.repaint();
