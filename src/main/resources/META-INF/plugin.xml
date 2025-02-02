@@ -1,7 +1,7 @@
 <idea-plugin>
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="samuel.natel20@gmail.com" url="https://github.com/SamuelNatel">Samuel Natel</vendor>
-    <id>com.program.todo-list</id>
+    <id>com.program.toDoList</id>
     <name>To-Do List</name>
 
     <description>
