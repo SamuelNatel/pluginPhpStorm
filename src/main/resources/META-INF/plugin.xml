@@ -1,31 +1,18 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-  <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-  <id>com.program.toDoList</id>
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="samuel.natel20@gmail.com" url="https://github.com/SamuelNatel">Samuel Natel</vendor>
+    <id>com.program.todo-list</id>
+    <name>To-Do List</name>
+    <vendor>Your Name</vendor>
 
-  <!-- Public plugin name should be written in Title Case.
-       Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-  <name>To-Do List</name>
+    <depends>com.intellij.modules.platform</depends>
 
-  <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-  <vendor email="samuel.natel20@gmail.com" url="https://github.com/SamuelNatel">Samuel Natel</vendor>
-
-  <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-       Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-       Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-  <description>
-    "A simple To-Do list plugin for PhpStorm"
-  </description>
-
-  <!-- Product and plugin compatibility requirements.
-       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
-  <depends>com.intellij.modules.platform</depends>
-
-  <extensions defaultExtensionNs="com.intellij">
-    <toolWindow id="ToDoList" anchor="right" factoryClass="com.program.ToDoListToolWindowFactory"/>
-  </extensions>
-
-  <version>1.1</version>
-
-  <idea-version since-build="222.3345.118" until-build="241.*"/>
+    <extensions defaultExtensionNs="com.intellij">
+      <toolWindow
+              id="ToDoList"
+              anchor="right"
+              factoryClass="com.program.ToDoListToolWindowFactory"
+              icon="AllIcons.Actions.ListFiles"
+      />
+    </extensions>
 </idea-plugin>
