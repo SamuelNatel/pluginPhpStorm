@@ -3,7 +3,10 @@
     <vendor email="samuel.natel20@gmail.com" url="https://github.com/SamuelNatel">Samuel Natel</vendor>
     <id>com.program.todo-list</id>
     <name>To-Do List</name>
-    <vendor>Your Name</vendor>
+
+    <description>
+        "A simple To-Do list plugin for PhpStorm"
+    </description>
 
     <depends>com.intellij.modules.platform</depends>
 
@@ -15,4 +18,8 @@
               icon="AllIcons.Actions.ListFiles"
       />
     </extensions>
+
+    <version>1.1</version>
+
+    <idea-version since-build="222.3345.118" until-build="241.*"/>
 </idea-plugin>
