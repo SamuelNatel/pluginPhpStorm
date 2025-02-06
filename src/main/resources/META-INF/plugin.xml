@@ -12,10 +12,9 @@
 
     <extensions defaultExtensionNs="com.intellij">
       <toolWindow
-              id="ToDoList"
+              id="To Do List"
               anchor="right"
               factoryClass="com.program.ToDoListToolWindowFactory"
-              icon="AllIcons.Actions.ListFiles"
       />
     </extensions>
 
